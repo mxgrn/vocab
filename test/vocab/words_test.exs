@@ -65,4 +65,63 @@ defmodule Vocab.WordsTest do
       assert %Ecto.Changeset{} = Words.change_entry(entry)
     end
   end
+
+  describe "decks" do
+    alias Vocab.Words.Deck
+
+    @valid_attrs %{name: "some name"}
+    @update_attrs %{name: "some updated name"}
+    @invalid_attrs %{name: nil}
+
+    def deck_fixture(attrs \\ %{}) do
+      {:ok, deck} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Words.create_deck()
+
+      deck
+    end
+
+    test "list_decks/0 returns all decks" do
+      deck = deck_fixture()
+      assert Words.list_decks() == [deck]
+    end
+
+    test "get_deck!/1 returns the deck with given id" do
+      deck = deck_fixture()
+      assert Words.get_deck!(deck.id) == deck
+    end
+
+    test "create_deck/1 with valid data creates a deck" do
+      assert {:ok, %Deck{} = deck} = Words.create_deck(@valid_attrs)
+      assert deck.name == "some name"
+    end
+
+    test "create_deck/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Words.create_deck(@invalid_attrs)
+    end
+
+    test "update_deck/2 with valid data updates the deck" do
+      deck = deck_fixture()
+      assert {:ok, %Deck{} = deck} = Words.update_deck(deck, @update_attrs)
+      assert deck.name == "some updated name"
+    end
+
+    test "update_deck/2 with invalid data returns error changeset" do
+      deck = deck_fixture()
+      assert {:error, %Ecto.Changeset{}} = Words.update_deck(deck, @invalid_attrs)
+      assert deck == Words.get_deck!(deck.id)
+    end
+
+    test "delete_deck/1 deletes the deck" do
+      deck = deck_fixture()
+      assert {:ok, %Deck{}} = Words.delete_deck(deck)
+      assert_raise Ecto.NoResultsError, fn -> Words.get_deck!(deck.id) end
+    end
+
+    test "change_deck/1 returns a deck changeset" do
+      deck = deck_fixture()
+      assert %Ecto.Changeset{} = Words.change_deck(deck)
+    end
+  end
 end

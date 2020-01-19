@@ -9,21 +9,30 @@ defmodule VocabWeb.EntryController do
     render(conn, "index.html", entries: entries)
   end
 
-  def new(conn, _params) do
+  def new(conn, %{"deck_id" => deck_id}) do
     changeset = Words.change_entry(%Entry{})
-    render(conn, "new.html", changeset: changeset)
+    deck = Words.get_deck!(deck_id)
+    render(conn, "new.html", changeset: changeset, deck: deck)
   end
 
-  def create(conn, %{"entry" => entry_params}) do
-    case Words.create_entry(entry_params) do
-      {:ok, entry} ->
-        conn
-        |> put_flash(:info, "Entry created successfully.")
-        |> redirect(to: Routes.entry_path(conn, :show, entry))
+  def create(conn, %{"deck_id" => deck_id, "entry" => entry_params}) do
+    deck = Words.get_deck!(deck_id)
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
-    end
+    filename = "/Users/mxgrn/Dropbox/Apps/Flashcards Deluxe/#{deck.name}.txt"
+
+    {:ok, file} = File.open(filename, [:append, :utf8])
+
+    IO.write(
+      file,
+      ~s("#{entry_params["source"]}"\t"#{entry_params["translation"]}"\t"#{
+        entry_params["example"]
+      }"\n)
+    )
+
+    File.close(file)
+
+    conn
+    |> redirect(to: Routes.deck_entry_path(conn, :new, deck_id))
   end
 
   def show(conn, %{"id" => id}) do
