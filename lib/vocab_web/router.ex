@@ -18,6 +18,8 @@ defmodule VocabWeb.Router do
 
     get "/", PageController, :index
 
+
+    get "/decks/locate", DeckController, :locate
     resources "/decks", DeckController do
       resources "/entries", EntryController
     end

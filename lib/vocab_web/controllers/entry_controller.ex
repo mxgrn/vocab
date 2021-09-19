@@ -18,7 +18,7 @@ defmodule VocabWeb.EntryController do
   def create(conn, %{"deck_id" => deck_id, "entry" => entry_params}) do
     deck = Words.get_deck!(deck_id)
 
-    filename = "/Users/mxgrn/Dropbox/Apps/Flashcards Deluxe/#{deck.name}.txt"
+    filename = VocabWeb.deck_filepath() <> "/#{deck.name}.txt"
 
     {:ok, file} = File.open(filename, [:append, :utf8])
 
@@ -44,28 +44,5 @@ defmodule VocabWeb.EntryController do
     entry = Words.get_entry!(id)
     changeset = Words.change_entry(entry)
     render(conn, "edit.html", entry: entry, changeset: changeset)
-  end
-
-  def update(conn, %{"id" => id, "entry" => entry_params}) do
-    entry = Words.get_entry!(id)
-
-    case Words.update_entry(entry, entry_params) do
-      {:ok, entry} ->
-        conn
-        |> put_flash(:info, "Entry updated successfully.")
-        |> redirect(to: Routes.entry_path(conn, :show, entry))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", entry: entry, changeset: changeset)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    entry = Words.get_entry!(id)
-    {:ok, _entry} = Words.delete_entry(entry)
-
-    conn
-    |> put_flash(:info, "Entry deleted successfully.")
-    |> redirect(to: Routes.entry_path(conn, :index))
   end
 end

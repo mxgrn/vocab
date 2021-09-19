@@ -17,7 +17,7 @@
           <% end %>
         </td>
 
-        <td>
+        <td style="text-align: right">
           <span><%= link "Edit", to: Routes.deck_path(@conn, :edit, deck) %></span>
           <span><%= link "Delete", to: Routes.deck_path(@conn, :delete, deck), method: :delete, data: [confirm: "Are you sure?"] %></span>
         </td>
@@ -27,3 +27,4 @@
 </table>
 
 <span><%= link "New Deck", to: Routes.deck_path(@conn, :new) %></span>
+<span class="float-right"><%= link "Locate decks in Finder", to: Routes.deck_path(@conn, :locate) %></span>

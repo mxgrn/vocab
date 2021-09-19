@@ -60,6 +60,8 @@ defmodule VocabWeb do
     end
   end
 
+  def deck_filepath, do: "/Users/mxgrn/Library/Mobile Documents/com~apple~CloudDocs/Flashcards"
+
   @doc """
   When used, dispatch to the appropriate controller/view/etc.
   """

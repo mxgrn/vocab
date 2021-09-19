@@ -26,6 +26,13 @@ defmodule VocabWeb.DeckController do
     end
   end
 
+  def locate(conn, _) do
+    System.cmd("open", [VocabWeb.deck_filepath()])
+
+    conn
+    |> redirect(to: Routes.deck_path(conn, :index))
+  end
+
   def show(conn, %{"id" => id}) do
     deck = Words.get_deck!(id)
     render(conn, "show.html", deck: deck)
