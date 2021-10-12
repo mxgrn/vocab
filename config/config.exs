@@ -15,7 +15,7 @@ config :vocab, VocabWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "HN4P8ykTZ1+x2DEUg38yTv1/ZrYzTipQhUAsO0gJ6Ws45A9XNyoM/Cb94QqwB+a0",
   render_errors: [view: VocabWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Vocab.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: Vocab.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,

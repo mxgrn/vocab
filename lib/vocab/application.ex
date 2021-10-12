@@ -10,6 +10,7 @@ defmodule Vocab.Application do
     children = [
       # Start the Ecto repository
       Vocab.Repo,
+      {Phoenix.PubSub, name: Vocab.PubSub},
       # Start the endpoint when the application starts
       VocabWeb.Endpoint
       # Starts a worker by calling: Vocab.Worker.start_link(arg)
