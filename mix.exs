@@ -42,7 +42,8 @@ defmodule Vocab.MixProject do
       {:phoenix_live_view, "~> 0.16.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev}
     ]
   end
 
