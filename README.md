@@ -1,5 +1,10 @@
 # Vocab
 
+## Todo
+
+  - Fix live page reload
+  - Fix tests
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
