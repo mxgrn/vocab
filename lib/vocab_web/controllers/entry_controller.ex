@@ -26,10 +26,10 @@ defmodule VocabWeb.EntryController do
 
         conn
         |> put_flash(:info, "Entry created successfully.")
-        |> redirect(to: Routes.deck_entry_path(conn, :index, deck))
+        |> redirect(to: Routes.deck_entry_path(conn, :new, deck))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, deck: deck)
     end
   end
 
