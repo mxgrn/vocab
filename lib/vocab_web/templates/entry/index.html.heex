@@ -1,0 +1,32 @@
+<%= link "< Decks", to: Routes.deck_path(@conn, :index) %>
+
+<h1>
+  <%= @deck.name %>
+</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Source</th>
+      <th>Translation</th>
+      <th>Example</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for entry <- @entries do %>
+      <tr>
+        <td><%= entry.source %></td>
+        <td><%= entry.translation %></td>
+        <td><%= entry.example %></td>
+
+        <td>
+          <span><%= link "Edit", to: Routes.entry_path(@conn, :edit, entry) %></span>
+          <span><%= link "Delete", to: Routes.entry_path(@conn, :delete, entry), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Entry", to: Routes.deck_entry_path(@conn, :new, @deck) %></span>

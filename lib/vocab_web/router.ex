@@ -16,13 +16,14 @@ defmodule VocabWeb.Router do
   scope "/", VocabWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
-
-
+    get "/", DeckController, :index
     get "/decks/locate", DeckController, :locate
+
     resources "/decks", DeckController do
-      resources "/entries", EntryController
+      resources "/entries", EntryController, only: [:index, :new, :create, :show]
     end
+
+    resources "/entries", EntryController, only: [:edit, :update, :delete]
   end
 
   # Other scopes may use custom stacks.

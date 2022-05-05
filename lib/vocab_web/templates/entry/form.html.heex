@@ -5,6 +5,10 @@
     </div>
   <% end %>
 
+  <%= if assigns[:deck] do %>
+    <%= hidden_input f, :deck_id, value: @deck.id %>
+  <% end %>
+
   <%= label f, :source %>
   <%= textarea f, :source, autofocus: true %>
   <%= error_tag f, :source %>

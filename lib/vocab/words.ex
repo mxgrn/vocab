@@ -4,9 +4,10 @@ defmodule Vocab.Words do
   """
 
   import Ecto.Query, warn: false
-  alias Vocab.Repo
 
+  alias Vocab.Repo
   alias Vocab.Words.Entry
+  alias Vocab.Words.Deck
 
   @doc """
   Returns the list of entries.
@@ -102,8 +103,6 @@ defmodule Vocab.Words do
     Entry.changeset(entry, %{})
   end
 
-  alias Vocab.Words.Deck
-
   @doc """
   Returns the list of decks.
 
@@ -196,5 +195,11 @@ defmodule Vocab.Words do
   """
   def change_deck(%Deck{} = deck) do
     Deck.changeset(deck, %{})
+  end
+
+  def entries_in_deck(%Deck{id: deck_id}) do
+    Entry
+    |> where(deck_id: ^deck_id)
+    |> Repo.all()
   end
 end

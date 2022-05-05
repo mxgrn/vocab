@@ -1,11 +1,14 @@
 defmodule Vocab.Words.Entry do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Vocab.Words.Deck
 
   schema "entries" do
-    field :example, :string
+    belongs_to :deck, Deck
+
     field :source, :string
     field :translation, :string
+    field :example, :string
 
     timestamps()
   end
@@ -13,7 +16,7 @@ defmodule Vocab.Words.Entry do
   @doc false
   def changeset(entry, attrs) do
     entry
-    |> cast(attrs, [:source, :translation, :example])
-    |> validate_required([:source, :translation, :example])
+    |> cast(attrs, [:deck_id, :source, :translation, :example])
+    |> validate_required([:deck_id, :source, :translation])
   end
 end

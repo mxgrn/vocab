@@ -3,6 +3,7 @@ defmodule VocabWeb.DeckController do
 
   alias Vocab.Words
   alias Vocab.Words.Deck
+  alias Vocab.Files
 
   def index(conn, _params) do
     decks = Words.list_decks()
@@ -19,7 +20,7 @@ defmodule VocabWeb.DeckController do
       {:ok, deck} ->
         conn
         |> put_flash(:info, "Deck created successfully.")
-        |> redirect(to: Routes.deck_path(conn, :show, deck))
+        |> redirect(to: Routes.deck_entry_path(conn, :new, deck))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
@@ -27,7 +28,7 @@ defmodule VocabWeb.DeckController do
   end
 
   def locate(conn, _) do
-    System.cmd("open", [VocabWeb.deck_filepath()])
+    System.cmd("open", [Vocab.deck_filepath()])
 
     conn
     |> redirect(to: Routes.deck_path(conn, :index))
@@ -61,6 +62,8 @@ defmodule VocabWeb.DeckController do
   def delete(conn, %{"id" => id}) do
     deck = Words.get_deck!(id)
     {:ok, _deck} = Words.delete_deck(deck)
+
+    Files.delete!(deck)
 
     conn
     |> put_flash(:info, "Deck deleted successfully.")

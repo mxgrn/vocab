@@ -3,10 +3,12 @@ defmodule VocabWeb.EntryController do
 
   alias Vocab.Words
   alias Vocab.Words.Entry
+  alias Vocab.Files
 
-  def index(conn, _params) do
+  def index(conn, %{"deck_id" => deck_id}) do
+    deck = Words.get_deck!(deck_id)
     entries = Words.list_entries()
-    render(conn, "index.html", entries: entries)
+    render(conn, "index.html", entries: entries, deck: deck)
   end
 
   def new(conn, %{"deck_id" => deck_id}) do
@@ -18,21 +20,17 @@ defmodule VocabWeb.EntryController do
   def create(conn, %{"deck_id" => deck_id, "entry" => entry_params}) do
     deck = Words.get_deck!(deck_id)
 
-    filename = VocabWeb.deck_filepath() <> "/#{deck.name}.txt"
+    case Words.create_entry(entry_params) do
+      {:ok, _entry} ->
+        Files.dump!(deck)
 
-    {:ok, file} = File.open(filename, [:append, :utf8])
+        conn
+        |> put_flash(:info, "Entry created successfully.")
+        |> redirect(to: Routes.deck_entry_path(conn, :index, deck))
 
-    IO.write(
-      file,
-      ~s("#{entry_params["source"]}"\t"#{entry_params["translation"]}"\t"#{
-        entry_params["example"]
-      }"\n)
-    )
-
-    File.close(file)
-
-    conn
-    |> redirect(to: Routes.deck_entry_path(conn, :new, deck_id))
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "new.html", changeset: changeset)
+    end
   end
 
   def show(conn, %{"id" => id}) do
@@ -44,5 +42,32 @@ defmodule VocabWeb.EntryController do
     entry = Words.get_entry!(id)
     changeset = Words.change_entry(entry)
     render(conn, "edit.html", entry: entry, changeset: changeset)
+  end
+
+  def update(conn, %{"id" => id, "entry" => entry_params}) do
+    entry = Words.get_entry!(id)
+
+    case Words.update_entry(entry, entry_params) do
+      {:ok, entry} ->
+        Files.dump!(entry.deck_id)
+
+        conn
+        |> put_flash(:info, "Entry updated successfully.")
+        |> redirect(to: Routes.deck_entry_path(conn, :index, entry.deck_id))
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, "edit.html", entry: entry, changeset: changeset)
+    end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    entry = Words.get_entry!(id)
+    {:ok, _entry} = Words.delete_entry(entry)
+
+    Files.dump!(entry.deck_id)
+
+    conn
+    |> put_flash(:info, "Entry deleted successfully.")
+    |> redirect(to: Routes.deck_entry_path(conn, :index, entry.deck_id))
   end
 end

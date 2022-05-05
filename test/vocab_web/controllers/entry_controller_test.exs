@@ -1,16 +1,11 @@
 defmodule VocabWeb.EntryControllerTest do
   use VocabWeb.ConnCase
 
-  alias Vocab.Words
+  import Vocab.WordsFixtures
 
   @create_attrs %{example: "some example", source: "some source", translation: "some translation"}
   @update_attrs %{example: "some updated example", source: "some updated source", translation: "some updated translation"}
   @invalid_attrs %{example: nil, source: nil, translation: nil}
-
-  def fixture(:entry) do
-    {:ok, entry} = Words.create_entry(@create_attrs)
-    entry
-  end
 
   describe "index" do
     test "lists all entries", %{conn: conn} do
@@ -75,6 +70,7 @@ defmodule VocabWeb.EntryControllerTest do
     test "deletes chosen entry", %{conn: conn, entry: entry} do
       conn = delete(conn, Routes.entry_path(conn, :delete, entry))
       assert redirected_to(conn) == Routes.entry_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.entry_path(conn, :show, entry))
       end
@@ -82,7 +78,7 @@ defmodule VocabWeb.EntryControllerTest do
   end
 
   defp create_entry(_) do
-    entry = fixture(:entry)
-    {:ok, entry: entry}
+    entry = entry_fixture()
+    %{entry: entry}
   end
 end
