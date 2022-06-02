@@ -22,6 +22,13 @@ defmodule Vocab.Words do
     Repo.all(Entry)
   end
 
+  def list_entries_for_deck(deck_id) do
+    Entry
+    |> where(deck_id: ^deck_id)
+    |> order_by(desc: :inserted_at)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single entry.
 

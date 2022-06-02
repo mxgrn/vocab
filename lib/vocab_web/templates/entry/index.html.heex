@@ -9,7 +9,6 @@
     <tr>
       <th>Source</th>
       <th>Translation</th>
-      <th>Example</th>
       <th></th>
     </tr>
   </thead>
@@ -18,7 +17,6 @@
       <tr>
         <td><%= entry.source %></td>
         <td><%= entry.translation %></td>
-        <td><%= entry.example %></td>
 
         <td>
           <span><%= link "Edit", to: Routes.entry_path(@conn, :edit, entry) %></span>

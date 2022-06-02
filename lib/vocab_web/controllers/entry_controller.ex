@@ -7,7 +7,7 @@ defmodule VocabWeb.EntryController do
 
   def index(conn, %{"deck_id" => deck_id}) do
     deck = Words.get_deck!(deck_id)
-    entries = Words.list_entries()
+    entries = Words.list_entries_for_deck(deck_id)
     render(conn, "index.html", entries: entries, deck: deck)
   end
 
