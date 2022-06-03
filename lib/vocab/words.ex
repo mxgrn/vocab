@@ -120,7 +120,9 @@ defmodule Vocab.Words do
 
   """
   def list_decks do
-    Repo.all(Deck)
+    Deck
+    |> order_by(:name)
+    |> Repo.all()
   end
 
   @doc """
