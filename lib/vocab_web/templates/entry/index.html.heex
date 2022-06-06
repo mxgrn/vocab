@@ -4,6 +4,8 @@
   <%= @deck.name %>
 </h1>
 
+<span><%= link "New Entry", to: Routes.deck_entry_path(@conn, :new, @deck) %></span>
+
 <table>
   <thead>
     <tr>
@@ -26,5 +28,3 @@
     <% end %>
   </tbody>
 </table>
-
-<span><%= link "New Entry", to: Routes.deck_entry_path(@conn, :new, @deck) %></span>

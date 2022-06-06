@@ -18,5 +18,6 @@ defmodule Vocab.Words.Entry do
     entry
     |> cast(attrs, [:deck_id, :source, :translation, :example])
     |> validate_required([:deck_id, :source, :translation])
+    |> unique_constraint(:source, name: :entries_deck_id_source_index)
   end
 end
