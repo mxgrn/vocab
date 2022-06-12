@@ -8,13 +8,15 @@ defmodule VocabWeb.EntryController do
   def index(conn, %{"deck_id" => deck_id}) do
     deck = Words.get_deck!(deck_id)
     entries = Words.list_entries_for_deck(deck_id)
-    render(conn, "index.html", entries: entries, deck: deck)
+
+    render(conn, "index.html", entries: entries, deck: deck, deck_stats: get_deck_stats(deck))
   end
 
   def new(conn, %{"deck_id" => deck_id}) do
     changeset = Words.change_entry(%Entry{})
     deck = Words.get_deck!(deck_id)
-    render(conn, "new.html", changeset: changeset, deck: deck)
+
+    render(conn, "new.html", changeset: changeset, deck: deck, deck_stats: get_deck_stats(deck))
   end
 
   def create(conn, %{"deck_id" => deck_id, "entry" => entry_params}) do
@@ -69,5 +71,11 @@ defmodule VocabWeb.EntryController do
     conn
     |> put_flash(:info, "Entry deleted successfully.")
     |> redirect(to: Routes.deck_entry_path(conn, :index, entry.deck_id))
+  end
+
+  def get_deck_stats(deck) do
+    %{
+      entries: Words.entry_count_in_deck(deck)
+    }
   end
 end

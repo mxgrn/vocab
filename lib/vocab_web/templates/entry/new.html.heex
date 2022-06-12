@@ -1,5 +1,8 @@
-<%= link "< Decks", to: Routes.deck_path(@conn, :index) %>
+<%= link "< All decks", to: Routes.deck_path(@conn, :index) %>
+<%= link "< Deck", to: Routes.deck_entry_path(@conn, :index, @deck) %>
 
-<h1><%= @deck.name %></h1>
+<h1>
+  <%= @deck.name %> (<%= @deck_stats.entries %>)
+</h1>
 
 <%= render "form.html", Map.put(assigns, :action, Routes.deck_entry_path(@conn, :create, @deck)) %>

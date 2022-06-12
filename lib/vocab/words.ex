@@ -211,4 +211,10 @@ defmodule Vocab.Words do
     |> where(deck_id: ^deck_id)
     |> Repo.all()
   end
+
+  def entry_count_in_deck(%Deck{id: deck_id}) do
+    Entry
+    |> where(deck_id: ^deck_id)
+    |> Repo.aggregate(:count, :id)
+  end
 end
