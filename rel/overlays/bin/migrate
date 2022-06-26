@@ -1,0 +1,3 @@
+#!/bin/sh
+cd -P -- "$(dirname -- "$0")"
+exec ./vocab eval Vocab.Release.migrate
