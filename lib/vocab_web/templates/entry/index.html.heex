@@ -1,7 +1,7 @@
 <%= link "< Decks", to: Routes.deck_path(@conn, :index) %>
 
 <h1>
-  <%= @deck.name %> (<%= @deck_stats.entries %>)
+  <%= @deck.name %> [<%= @deck_stats.entries %>]
 </h1>
 
 <span><%= link "New Entry", to: Routes.deck_entry_path(@conn, :new, @deck) %></span>

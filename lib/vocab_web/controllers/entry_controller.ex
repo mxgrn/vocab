@@ -22,7 +22,10 @@ defmodule VocabWeb.EntryController do
   def create(conn, %{"deck_id" => deck_id, "entry" => entry_params}) do
     deck = Words.get_deck!(deck_id)
 
-    case Words.create_entry(entry_params) do
+    entry_params
+    |> Map.put("deck_id", deck_id)
+    |> Words.create_entry()
+    |> case do
       {:ok, _entry} ->
         Files.dump!(deck)
 
@@ -31,7 +34,11 @@ defmodule VocabWeb.EntryController do
         |> redirect(to: Routes.deck_entry_path(conn, :new, deck))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset, deck: deck)
+        render(conn, "new.html",
+          changeset: changeset,
+          deck: deck,
+          deck_stats: get_deck_stats(deck)
+        )
     end
   end
 

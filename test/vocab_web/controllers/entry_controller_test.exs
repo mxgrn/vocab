@@ -3,38 +3,47 @@ defmodule VocabWeb.EntryControllerTest do
 
   import Vocab.WordsFixtures
 
+  alias Vocab.Words
+
   @create_attrs %{example: "some example", source: "some source", translation: "some translation"}
-  @update_attrs %{example: "some updated example", source: "some updated source", translation: "some updated translation"}
+  @update_attrs %{
+    example: "some updated example",
+    source: "some updated source",
+    translation: "some updated translation"
+  }
   @invalid_attrs %{example: nil, source: nil, translation: nil}
+
+  @valid_deck_attrs %{name: "some name"}
 
   describe "index" do
     test "lists all entries", %{conn: conn} do
-      conn = get(conn, Routes.entry_path(conn, :index))
-      assert html_response(conn, 200) =~ "Listing Entries"
+      deck = create_deck()
+      conn = get(conn, Routes.deck_entry_path(conn, :index, deck))
+      assert html_response(conn, 200) =~ "#{deck.name} [0]"
     end
   end
 
   describe "new entry" do
     test "renders form", %{conn: conn} do
-      conn = get(conn, Routes.entry_path(conn, :new))
-      assert html_response(conn, 200) =~ "New Entry"
+      deck = create_deck()
+      conn = get(conn, Routes.deck_entry_path(conn, :new, deck))
+      assert html_response(conn, 200) =~ "#{deck.name} [0]"
     end
   end
 
   describe "create entry" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.entry_path(conn, :create), entry: @create_attrs)
+      deck = create_deck()
+      conn = post(conn, Routes.deck_entry_path(conn, :create, deck), entry: @create_attrs)
 
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.entry_path(conn, :show, id)
-
-      conn = get(conn, Routes.entry_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Show Entry"
+      assert %{deck_id: deck_id} = redirected_params(conn)
+      assert redirected_to(conn) == Routes.deck_entry_path(conn, :new, deck_id)
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.entry_path(conn, :create), entry: @invalid_attrs)
-      assert html_response(conn, 200) =~ "New Entry"
+      deck = create_deck()
+      conn = post(conn, Routes.deck_entry_path(conn, :create, deck), entry: @invalid_attrs)
+      assert html_response(conn, 200) =~ "#{deck.name} [0]"
     end
   end
 
@@ -80,5 +89,14 @@ defmodule VocabWeb.EntryControllerTest do
   defp create_entry(_) do
     entry = entry_fixture()
     %{entry: entry}
+  end
+
+  defp create_deck(attrs \\ %{}) do
+    {:ok, deck} =
+      attrs
+      |> Enum.into(@valid_deck_attrs)
+      |> Words.create_deck()
+
+    deck
   end
 end
