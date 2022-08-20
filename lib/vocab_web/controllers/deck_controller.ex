@@ -6,7 +6,7 @@ defmodule VocabWeb.DeckController do
   alias Vocab.Files
 
   def index(conn, _params) do
-    decks = Words.list_decks()
+    decks = Words.list_decks_with_entry_count()
     render(conn, "index.html", decks: decks)
   end
 

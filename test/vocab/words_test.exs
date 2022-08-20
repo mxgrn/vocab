@@ -5,6 +5,7 @@ defmodule Vocab.WordsTest do
 
   describe "decks" do
     alias Vocab.Words.Deck
+    import Vocab.WordsFixtures
 
     @valid_attrs %{name: "some name"}
     @update_attrs %{name: "some updated name"}
@@ -22,6 +23,16 @@ defmodule Vocab.WordsTest do
     test "list_decks/0 returns all decks" do
       deck = deck_fixture()
       assert Words.list_decks() == [deck]
+    end
+
+    test "list_decks_with_entry_count/0 returns decks along with entry count" do
+      deck_1 = deck_fixture(%{name: "A"})
+      entry_fixture(%{deck_id: deck_1.id, source: "A1"})
+
+      deck_2 = deck_fixture(%{name: "B"})
+      entry_fixture(%{deck_id: deck_2.id, source: "B1"})
+      entry_fixture(%{deck_id: deck_2.id, source: "B2"})
+      assert Words.list_decks_with_entry_count() == [{deck_1, 1}, {deck_2, 2}]
     end
 
     test "get_deck!/1 returns the deck with given id" do
@@ -80,7 +91,11 @@ defmodule Vocab.WordsTest do
     end
 
     test "create_entry/1 with valid data creates a entry" do
-      valid_attrs = %{example: "some example", source: "some source", translation: "some translation"}
+      valid_attrs = %{
+        example: "some example",
+        source: "some source",
+        translation: "some translation"
+      }
 
       assert {:ok, %Entry{} = entry} = Words.create_entry(valid_attrs)
       assert entry.example == "some example"
@@ -94,7 +109,12 @@ defmodule Vocab.WordsTest do
 
     test "update_entry/2 with valid data updates the entry" do
       entry = entry_fixture()
-      update_attrs = %{example: "some updated example", source: "some updated source", translation: "some updated translation"}
+
+      update_attrs = %{
+        example: "some updated example",
+        source: "some updated source",
+        translation: "some updated translation"
+      }
 
       assert {:ok, %Entry{} = entry} = Words.update_entry(entry, update_attrs)
       assert entry.example == "some updated example"

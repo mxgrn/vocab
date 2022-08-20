@@ -1,8 +1,10 @@
 defmodule Vocab.Words.Deck do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Vocab.Words.Entry
 
   schema "decks" do
+    has_many :entries, Entry
     field :name, :string
 
     timestamps()

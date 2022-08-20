@@ -125,6 +125,15 @@ defmodule Vocab.Words do
     |> Repo.all()
   end
 
+  def list_decks_with_entry_count do
+    from(
+      d in Deck,
+      select: {d, fragment("(SELECT COUNT(0) FROM entries WHERE deck_id = ?)", d.id)},
+      order_by: d.name
+    )
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single deck.
 

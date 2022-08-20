@@ -9,11 +9,12 @@
     </tr>
   </thead>
   <tbody>
-    <%= for deck <- @decks do %>
+    <%= for {deck, entry_count} <- @decks do %>
       <tr>
         <td>
           <%= link to: Routes.deck_entry_path(@conn, :index, deck) do %>
             <%= deck.name %>
+            [<%= entry_count %>]
           <% end %>
         </td>
 
