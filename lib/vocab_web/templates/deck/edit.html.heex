@@ -2,6 +2,6 @@
 
 <p style="color: red;">You'll need to rename the file manually</p>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.deck_path(@conn, :update, @deck)) %>
+<%= render("form.html", Map.put(assigns, :action, Routes.deck_path(@conn, :update, @deck))) %>
 
-<span><%= link "Back", to: Routes.deck_path(@conn, :index) %></span>
+<span><%= link("Back", to: Routes.deck_path(@conn, :index)) %></span>

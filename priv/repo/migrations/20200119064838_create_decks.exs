@@ -7,6 +7,5 @@ defmodule Vocab.Repo.Migrations.CreateDecks do
 
       timestamps()
     end
-
   end
 end

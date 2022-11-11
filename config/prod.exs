@@ -14,6 +14,8 @@ config :vocab, VocabWeb.Endpoint, cache_static_manifest: "priv/static/cache_mani
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :vocab, VocabWeb.Endpoint, http: [port: 6001]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

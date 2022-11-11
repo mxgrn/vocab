@@ -1,7 +1,6 @@
 <h1>Show Entry</h1>
 
 <ul>
-
   <li>
     <strong>Source:</strong>
     <%= @entry.source %>
@@ -16,7 +15,7 @@
     <strong>Example:</strong>
     <%= @entry.example %>
   </li>
-
 </ul>
 
-<span><%= link "Edit", to: Routes.entry_path(@conn, :edit, @entry) %></span> |
+<span><%= link("Edit", to: Routes.entry_path(@conn, :edit, @entry)) %></span>
+|

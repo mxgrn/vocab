@@ -1,13 +1,11 @@
 <h1>Show Deck</h1>
 
 <ul>
-
   <li>
     <strong>Name:</strong>
     <%= @deck.name %>
   </li>
-
 </ul>
 
-<span><%= link "Edit", to: Routes.deck_path(@conn, :edit, @deck) %></span>
-<span><%= link "Back", to: Routes.deck_path(@conn, :index) %></span>
+<span><%= link("Edit", to: Routes.deck_path(@conn, :edit, @deck)) %></span>
+<span><%= link("Back", to: Routes.deck_path(@conn, :index)) %></span>

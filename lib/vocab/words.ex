@@ -61,6 +61,15 @@ defmodule Vocab.Words do
     %Entry{}
     |> Entry.changeset(attrs)
     |> Repo.insert()
+    |> case do
+      {:ok, entry} ->
+        %{deck: deck} = Repo.preload(entry, :deck)
+        {:ok, _} = update_deck(deck, %{last_entry_inserted_at: entry.inserted_at})
+        {:ok, entry}
+
+      other ->
+        other
+    end
   end
 
   @doc """
@@ -129,7 +138,7 @@ defmodule Vocab.Words do
     from(
       d in Deck,
       select: {d, fragment("(SELECT COUNT(0) FROM entries WHERE deck_id = ?)", d.id)},
-      order_by: d.name
+      order_by: [desc: d.last_entry_inserted_at]
     )
     |> Repo.all()
   end

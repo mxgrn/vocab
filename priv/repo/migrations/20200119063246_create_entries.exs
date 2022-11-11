@@ -9,6 +9,5 @@ defmodule Vocab.Repo.Migrations.CreateEntries do
 
       timestamps()
     end
-
   end
 end

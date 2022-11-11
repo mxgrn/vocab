@@ -1,10 +1,10 @@
-<%= link "< Decks", to: Routes.deck_path(@conn, :index) %>
+<%= link("< Decks", to: Routes.deck_path(@conn, :index)) %>
 
 <h1>
   <%= @deck.name %> [<%= @deck_stats.entries %>]
 </h1>
 
-<span><%= link "New Entry", to: Routes.deck_entry_path(@conn, :new, @deck) %></span>
+<span><%= link("New Entry", to: Routes.deck_entry_path(@conn, :new, @deck)) %></span>
 
 <table>
   <thead>
@@ -21,8 +21,14 @@
         <td><%= entry.translation %></td>
 
         <td>
-          <span><%= link "Edit", to: Routes.entry_path(@conn, :edit, entry) %></span>
-          <span><%= link "Delete", to: Routes.entry_path(@conn, :delete, entry), method: :delete, data: [confirm: "Are you sure?"] %></span>
+          <span><%= link("Edit", to: Routes.entry_path(@conn, :edit, entry)) %></span>
+          <span>
+            <%= link("Delete",
+              to: Routes.entry_path(@conn, :delete, entry),
+              method: :delete,
+              data: [confirm: "Are you sure?"]
+            ) %>
+          </span>
         </td>
       </tr>
     <% end %>
