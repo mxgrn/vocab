@@ -17,11 +17,11 @@
   <tbody>
     <%= for entry <- @entries do %>
       <tr>
-        <td><%= entry.source %></td>
-        <td><%= entry.translation %></td>
+        <td><%= link(entry.source, to: Routes.entry_path(@conn, :edit, entry)) %></td>
+        <td><%= raw Earmark.as_html!(entry.translation) %></td>
 
         <td>
-          <span><%= link("Edit", to: Routes.entry_path(@conn, :edit, entry)) %></span>
+          <span></span>
           <span>
             <%= link("Delete",
               to: Routes.entry_path(@conn, :delete, entry),

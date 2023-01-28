@@ -43,7 +43,8 @@ defmodule Vocab.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev}
+      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev},
+      {:earmark, "~> 1.4"}
     ]
   end
 
