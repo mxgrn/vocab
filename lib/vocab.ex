@@ -7,5 +7,5 @@ defmodule Vocab do
   if it comes from the database, an external API or others.
   """
 
-  def deck_filepath, do: "/Users/mxgrn/Library/Mobile Documents/com~apple~CloudDocs/Flashcards"
+  def deck_filepath, do: Application.get_env(:vocab, :deck_filepath)
 end

@@ -1,5 +1,5 @@
 # This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
+# and its dependencies with the aid of the Config module.
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
@@ -8,14 +8,50 @@
 import Config
 
 config :vocab,
-  ecto_repos: [Vocab.Repo]
+  ecto_repos: [Vocab.Repo],
+  generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint
 config :vocab, VocabWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "HN4P8ykTZ1+x2DEUg38yTv1/ZrYzTipQhUAsO0gJ6Ws45A9XNyoM/Cb94QqwB+a0",
-  render_errors: [view: VocabWeb.ErrorView, accepts: ~w(html json)],
-  pubsub_server: Vocab.PubSub
+  adapter: Phoenix.Endpoint.Cowboy2Adapter,
+  render_errors: [
+    formats: [html: VocabWeb.ErrorHTML, json: VocabWeb.ErrorJSON],
+    layout: false
+  ],
+  pubsub_server: Vocab.PubSub,
+  live_view: [signing_salt: "ok9ziY7h"]
+
+# Configures the mailer
+#
+# By default it uses the "Local" adapter which stores the emails
+# locally. You can see the emails in your browser, at "/dev/mailbox".
+#
+# For production it's recommended to configure a different adapter
+# at the `config/runtime.exs`.
+config :vocab, Vocab.Mailer, adapter: Swoosh.Adapters.Local
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.17.11",
+  default: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configure tailwind (the version is required)
+config :tailwind,
+  version: "3.3.2",
+  default: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,
@@ -25,16 +61,10 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Configure esbuild (the version is required)
-config :esbuild,
-  version: "0.12.18",
-  default: [
-    args:
-      ~w(js/app.js --bundle --target=es2016 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
-    cd: Path.expand("../assets", __DIR__),
-    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
-  ]
+config :vocab,
+       :deck_filepath,
+       "/Users/mxgrn/Library/Mobile Documents/com~apple~CloudDocs/Flashcards"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env()}.exs"
+import_config "#{config_env()}.exs"

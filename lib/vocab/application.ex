@@ -5,16 +5,19 @@ defmodule Vocab.Application do
 
   use Application
 
+  @impl true
   def start(_type, _args) do
-    # List all child processes to be supervised
     children = [
-      # Start the Ecto repository
+      VocabWeb.Telemetry,
       Vocab.Repo,
+      {DNSCluster, query: Application.get_env(:vocab, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Vocab.PubSub},
-      # Start the endpoint when the application starts
-      VocabWeb.Endpoint
-      # Starts a worker by calling: Vocab.Worker.start_link(arg)
+      # Start the Finch HTTP client for sending emails
+      {Finch, name: Vocab.Finch},
+      # Start a worker by calling: Vocab.Worker.start_link(arg)
       # {Vocab.Worker, arg},
+      # Start to serve requests, typically the last entry
+      VocabWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
@@ -25,6 +28,7 @@ defmodule Vocab.Application do
 
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
+  @impl true
   def config_change(changed, _new, removed) do
     VocabWeb.Endpoint.config_change(changed, removed)
     :ok

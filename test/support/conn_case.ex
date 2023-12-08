@@ -12,30 +12,27 @@ defmodule VocabWeb.ConnCase do
   are reverted at the end of every test. If you are using
   PostgreSQL, you can even run database tests asynchronously
   by setting `use VocabWeb.ConnCase, async: true`, although
-  this option is not recommendded for other databases.
+  this option is not recommended for other databases.
   """
 
   use ExUnit.CaseTemplate
 
   using do
     quote do
+      # The default endpoint for testing
+      @endpoint VocabWeb.Endpoint
+
+      use VocabWeb, :verified_routes
+
       # Import conveniences for testing with connections
       import Plug.Conn
       import Phoenix.ConnTest
-      alias VocabWeb.Router.Helpers, as: Routes
-
-      # The default endpoint for testing
-      @endpoint VocabWeb.Endpoint
+      import VocabWeb.ConnCase
     end
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Vocab.Repo)
-
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Vocab.Repo, {:shared, self()})
-    end
-
+    Vocab.DataCase.setup_sandbox(tags)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end
