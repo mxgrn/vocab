@@ -11,6 +11,8 @@ config :vocab,
   ecto_repos: [Vocab.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+config :vocab, Vocab.Repo, database: "database.db"
+
 # Configures the endpoint
 config :vocab, VocabWeb.Endpoint,
   url: [host: "localhost"],

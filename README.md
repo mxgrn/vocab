@@ -22,3 +22,7 @@ The files will be created in the Flashcards folder on iCloud drive.
 ### Run the release
 
     PHX_SERVER=true SECRET_KEY_BASE=Mp7fEBRFRWeh1KXPzxTsvjFlVWIK9zIpRSRklaMdiN5k4M/MUlasj9ZrSo9BmEYG PORT=6001 DATABASE_URL=ecto://postgres:postgres@localhost/vocab_dev _build/prod/rel/vocab/bin/vocab start
+
+## To run as a Tauri app
+
+    cargo tauri dev
