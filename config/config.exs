@@ -19,6 +19,7 @@ config :vocab, VocabWeb.Endpoint,
     formats: [html: VocabWeb.ErrorHTML, json: VocabWeb.ErrorJSON],
     layout: false
   ],
+  check_origin: false,
   pubsub_server: Vocab.PubSub,
   live_view: [signing_salt: "ok9ziY7h"]
 
