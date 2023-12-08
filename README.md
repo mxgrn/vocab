@@ -1,18 +1,16 @@
 # Vocab
 
-To start your Phoenix server:
+## How to run
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+### Get deps
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+    mix deps.get
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+### Generate the release
 
-## Learn more
+    mix phx.digest
+    MIX_ENV=prod mix release
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+### Run the release
+
+    PHX_SERVER=true SECRET_KEY_BASE=Mp7fEBRFRWeh1KXPzxTsvjFlVWIK9zIpRSRklaMdiN5k4M/MUlasj9ZrSo9BmEYG PORT=6001 DATABASE_URL=ecto://postgres:postgres@localhost/vocab_dev _build/prod/rel/vocab/bin/vocab start
