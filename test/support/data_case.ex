@@ -18,12 +18,12 @@ defmodule Vocab.DataCase do
 
   using do
     quote do
-      alias Vocab.Repo
-
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
       import Vocab.DataCase
+
+      alias Vocab.Repo
     end
   end
 

@@ -4,9 +4,9 @@ defmodule Vocab.DecksTest do
   alias Vocab.Decks
 
   describe "decks" do
-    alias Vocab.Decks.Deck
-
     import Vocab.DecksFixtures
+
+    alias Vocab.Decks.Deck
 
     @invalid_attrs %{name: nil, last_entry_inserted_at: nil}
 

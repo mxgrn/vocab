@@ -1,5 +1,7 @@
 defmodule Vocab.Decks.Deck do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
 
   schema "decks" do

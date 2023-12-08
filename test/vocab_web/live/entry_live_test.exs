@@ -5,7 +5,11 @@ defmodule VocabWeb.EntryLiveTest do
   import Vocab.EntriesFixtures
 
   @create_attrs %{source: "some source", translation: "some translation", pronunciation: "some pronunciation"}
-  @update_attrs %{source: "some updated source", translation: "some updated translation", pronunciation: "some updated pronunciation"}
+  @update_attrs %{
+    source: "some updated source",
+    translation: "some updated translation",
+    pronunciation: "some updated pronunciation"
+  }
   @invalid_attrs %{source: nil, translation: nil, pronunciation: nil}
 
   defp create_entry(_) do

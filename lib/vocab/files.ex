@@ -1,7 +1,8 @@
 defmodule Vocab.Files do
-  alias Vocab.Entries
+  @moduledoc false
   alias Vocab.Decks
   alias Vocab.Decks.Deck
+  alias Vocab.Entries
 
   def dump!(%Deck{} = deck) do
     file = deck |> filename() |> File.open!([:write, :utf8])

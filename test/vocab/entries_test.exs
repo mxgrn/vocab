@@ -4,9 +4,9 @@ defmodule Vocab.EntriesTest do
   alias Vocab.Entries
 
   describe "entries" do
-    alias Vocab.Entries.Entry
-
     import Vocab.EntriesFixtures
+
+    alias Vocab.Entries.Entry
 
     @invalid_attrs %{source: nil, translation: nil, pronunciation: nil}
 
@@ -35,7 +35,12 @@ defmodule Vocab.EntriesTest do
 
     test "update_entry/2 with valid data updates the entry" do
       entry = entry_fixture()
-      update_attrs = %{source: "some updated source", translation: "some updated translation", pronunciation: "some updated pronunciation"}
+
+      update_attrs = %{
+        source: "some updated source",
+        translation: "some updated translation",
+        pronunciation: "some updated pronunciation"
+      }
 
       assert {:ok, %Entry{} = entry} = Entries.update_entry(entry, update_attrs)
       assert entry.source == "some updated source"

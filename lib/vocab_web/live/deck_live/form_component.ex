@@ -1,4 +1,5 @@
 defmodule VocabWeb.DeckLive.FormComponent do
+  @moduledoc false
   use VocabWeb, :live_component
 
   alias Vocab.Decks

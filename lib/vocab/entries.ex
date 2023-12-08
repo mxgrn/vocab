@@ -4,10 +4,10 @@ defmodule Vocab.Entries do
   """
 
   import Ecto.Query, warn: false
-  alias Vocab.Repo
 
-  alias Vocab.Entries.Entry
   alias Vocab.Decks
+  alias Vocab.Entries.Entry
+  alias Vocab.Repo
 
   @doc """
   Returns the list of entries.

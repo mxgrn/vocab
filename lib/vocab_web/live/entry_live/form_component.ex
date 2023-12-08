@@ -1,4 +1,5 @@
 defmodule VocabWeb.EntryLive.FormComponent do
+  @moduledoc false
   use VocabWeb, :live_component
 
   alias Vocab.Entries

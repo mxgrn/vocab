@@ -1,5 +1,7 @@
 defmodule Vocab.Entries.Entry do
+  @moduledoc false
   use Ecto.Schema
+
   import Ecto.Changeset
 
   schema "entries" do

@@ -1,4 +1,5 @@
 defmodule VocabWeb.DeckLive.Index do
+  @moduledoc false
   use VocabWeb, :live_view
 
   alias Vocab.Decks

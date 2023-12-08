@@ -1,8 +1,9 @@
 defmodule VocabWeb.EntryLive.Index do
+  @moduledoc false
   use VocabWeb, :live_view
 
-  alias Vocab.Entries
   alias Vocab.Decks
+  alias Vocab.Entries
   alias Vocab.Entries.Entry
   alias Vocab.Files
 

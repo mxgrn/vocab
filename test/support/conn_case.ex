@@ -20,14 +20,15 @@ defmodule VocabWeb.ConnCase do
   using do
     quote do
       # The default endpoint for testing
-      @endpoint VocabWeb.Endpoint
-
       use VocabWeb, :verified_routes
+
+      import Phoenix.ConnTest
 
       # Import conveniences for testing with connections
       import Plug.Conn
-      import Phoenix.ConnTest
       import VocabWeb.ConnCase
+
+      @endpoint VocabWeb.Endpoint
     end
   end
 

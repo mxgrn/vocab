@@ -1,4 +1,5 @@
 defmodule DateTimeUtil do
+  @moduledoc false
   def time_ago(date, today \\ Date.utc_today()) do
     days = Date.diff(today, date)
 
@@ -7,9 +8,9 @@ defmodule DateTimeUtil do
       days <= 1 -> "yesterday"
       days <= 28 -> "#{days} days ago"
       days <= 50 -> "a month ago"
-      days <= 365 -> "#{(days / 30) |> ceil()} months ago"
+      days <= 365 -> "#{ceil(days / 30)} months ago"
       days <= 550 -> "a year ago"
-      true -> "#{(days / 365) |> ceil()} years ago"
+      true -> "#{ceil(days / 365)} years ago"
     end
   end
 end

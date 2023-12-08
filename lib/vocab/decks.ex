@@ -4,9 +4,9 @@ defmodule Vocab.Decks do
   """
 
   import Ecto.Query, warn: false
-  alias Vocab.Repo
 
   alias Vocab.Decks.Deck
+  alias Vocab.Repo
 
   @doc """
   Returns the list of decks.
@@ -22,14 +22,12 @@ defmodule Vocab.Decks do
   end
 
   def list_decks_with_entry_count do
-    from(
-      d in Deck,
-      select_merge: %{
-        entry_count: fragment("(SELECT COUNT(0) FROM entries WHERE deck_id = ?)", d.id)
-      },
-      order_by: [desc: d.last_entry_inserted_at]
+    Repo.all(
+      from(d in Deck,
+        select_merge: %{entry_count: fragment("(SELECT COUNT(0) FROM entries WHERE deck_id = ?)", d.id)},
+        order_by: [desc: d.last_entry_inserted_at]
+      )
     )
-    |> Repo.all()
   end
 
   @doc """
