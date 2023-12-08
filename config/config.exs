@@ -64,7 +64,7 @@ config :phoenix, :json_library, Jason
 
 config :vocab,
        :deck_filepath,
-       "/Users/mxgrn/Library/Mobile Documents/com~apple~CloudDocs/Flashcards"
+       "~/Library/Mobile Documents/com~apple~CloudDocs/Flashcards"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
