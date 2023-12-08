@@ -17,7 +17,7 @@ defmodule VocabWeb.Router do
   scope "/", VocabWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    live "/", DeckLive.Index, :index
 
     live "/decks", DeckLive.Index, :index
     live "/decks/new", DeckLive.Index, :new
