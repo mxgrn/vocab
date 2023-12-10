@@ -4,9 +4,9 @@ defmodule VocabWeb.DeckLiveTest do
   import Phoenix.LiveViewTest
   import Vocab.DecksFixtures
 
-  @create_attrs %{name: "some name", last_entry_inserted_at: "2023-12-06T04:13:00Z"}
-  @update_attrs %{name: "some updated name", last_entry_inserted_at: "2023-12-07T04:13:00Z"}
-  @invalid_attrs %{name: nil, last_entry_inserted_at: nil}
+  @create_attrs %{name: "some name", last_card_inserted_at: "2023-12-06T04:13:00Z"}
+  @update_attrs %{name: "some updated name", last_card_inserted_at: "2023-12-07T04:13:00Z"}
+  @invalid_attrs %{name: nil, last_card_inserted_at: nil}
 
   defp create_deck(_) do
     deck = deck_fixture()

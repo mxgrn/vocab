@@ -1,8 +1,8 @@
-defmodule VocabWeb.EntryLive.FormComponent do
+defmodule VocabWeb.CardLive.FormComponent do
   @moduledoc false
   use VocabWeb, :live_component
 
-  alias Vocab.Entries
+  alias Vocab.Cards
 
   @impl true
   def render(assigns) do
@@ -14,7 +14,7 @@ defmodule VocabWeb.EntryLive.FormComponent do
 
       <.simple_form
         for={@form}
-        id="entry-form"
+        id="card-form"
         phx-target={@myself}
         phx-change="validate"
         phx-submit="save"
@@ -30,7 +30,7 @@ defmodule VocabWeb.EntryLive.FormComponent do
         <.input field={@form[:pronunciation]} type="text" label="Pronunciation" />
         <.input field={@form[:deck_id]} type="hidden" value={@deck.id} />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Entry</.button>
+          <.button phx-disable-with="Saving...">Save Card</.button>
         </:actions>
       </.simple_form>
     </div>
@@ -38,8 +38,8 @@ defmodule VocabWeb.EntryLive.FormComponent do
   end
 
   @impl true
-  def update(%{entry: entry} = assigns, socket) do
-    changeset = Entries.change_entry(entry)
+  def update(%{card: card} = assigns, socket) do
+    changeset = Cards.change_card(card)
 
     {:ok,
      socket
@@ -48,27 +48,27 @@ defmodule VocabWeb.EntryLive.FormComponent do
   end
 
   @impl true
-  def handle_event("validate", %{"entry" => entry_params}, socket) do
+  def handle_event("validate", %{"card" => card_params}, socket) do
     changeset =
-      socket.assigns.entry
-      |> Entries.change_entry(entry_params)
+      socket.assigns.card
+      |> Cards.change_card(card_params)
       |> Map.put(:action, :validate)
 
     {:noreply, assign_form(socket, changeset)}
   end
 
-  def handle_event("save", %{"entry" => entry_params}, socket) do
-    save_entry(socket, socket.assigns.action, entry_params)
+  def handle_event("save", %{"card" => card_params}, socket) do
+    save_card(socket, socket.assigns.action, card_params)
   end
 
-  defp save_entry(socket, :edit, entry_params) do
-    case Entries.update_entry(socket.assigns.entry, entry_params) do
-      {:ok, entry} ->
-        notify_parent({:saved, entry})
+  defp save_card(socket, :edit, card_params) do
+    case Cards.update_card(socket.assigns.card, card_params) do
+      {:ok, card} ->
+        notify_parent({:saved, card})
 
         {:noreply,
          socket
-         |> put_flash(:info, "Entry updated successfully")
+         |> put_flash(:info, "Card updated successfully")
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -76,14 +76,14 @@ defmodule VocabWeb.EntryLive.FormComponent do
     end
   end
 
-  defp save_entry(socket, :new, entry_params) do
-    case Entries.create_entry(entry_params) do
-      {:ok, entry} ->
-        notify_parent({:saved, entry})
+  defp save_card(socket, :new, card_params) do
+    case Cards.create_card(card_params) do
+      {:ok, card} ->
+        notify_parent({:saved, card})
 
         {:noreply,
          socket
-         |> put_flash(:info, "Entry created successfully")
+         |> put_flash(:info, "Card created successfully")
          |> push_patch(to: socket.assigns.patch)}
 
       {:error, %Ecto.Changeset{} = changeset} ->

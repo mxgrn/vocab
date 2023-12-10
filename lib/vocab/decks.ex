@@ -21,11 +21,11 @@ defmodule Vocab.Decks do
     Repo.all(Deck)
   end
 
-  def list_decks_with_entry_count do
+  def list_decks_with_card_count do
     Repo.all(
       from(d in Deck,
-        select_merge: %{entry_count: fragment("(SELECT COUNT(0) FROM entries WHERE deck_id = ?)", d.id)},
-        order_by: [desc: d.last_entry_inserted_at]
+        select_merge: %{card_count: fragment("(SELECT COUNT(0) FROM cards WHERE deck_id = ?)", d.id)},
+        order_by: [desc: d.last_card_inserted_at]
       )
     )
   end

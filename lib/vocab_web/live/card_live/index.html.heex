@@ -1,0 +1,48 @@
+<.header>
+  <span phx-click={JS.navigate(~p"/decks")} class="cursor-pointer">
+    <.icon name="hero-chevron-left" />
+    <%= @deck.name %> (<%= @card_count %>)
+  </span>
+
+  <:actions>
+    <.link patch={~p"/decks/#{@deck}/cards/new"}>
+      <.button>New Card</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="cards" rows={@streams.cards}>
+  <:col :let={{_id, card}}>
+    <.link patch={~p"/cards/#{card}/edit"}><%= card.source %></.link>
+  </:col>
+  <:action :let={{_id, card}}>
+    <div class="sr-only">
+      <.link navigate={~p"/cards/#{card}"}>Show</.link>
+    </div>
+  </:action>
+  <:action :let={{id, card}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: card.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="card-modal"
+  show
+  on_cancel={JS.patch(~p"/decks/#{@deck}/cards")}
+>
+  <.live_component
+    module={VocabWeb.CardLive.FormComponent}
+    id={@card.id || :new}
+    title={@page_title}
+    action={@live_action}
+    card={@card}
+    deck={@deck}
+    patch={~p"/decks/#{@deck}/cards"}
+  />
+</.modal>

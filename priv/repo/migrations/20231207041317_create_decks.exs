@@ -4,7 +4,7 @@ defmodule Vocab.Repo.Migrations.CreateDecks do
   def change do
     create table(:decks) do
       add :name, :string
-      add :last_entry_inserted_at, :utc_datetime
+      add :last_card_inserted_at, :utc_datetime
 
       timestamps(type: :utc_datetime)
     end

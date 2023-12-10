@@ -11,17 +11,17 @@
 <.table
   id="decks"
   rows={@streams.decks}
-  row_click={fn {_id, deck} -> JS.navigate(~p"/decks/#{deck}/entries") end}
+  row_click={fn {_id, deck} -> JS.navigate(~p"/decks/#{deck}/cards") end}
 >
   <:col :let={{_id, deck}}>
-    <%= deck.name %> (<%= deck.entry_count || 0 %>)
+    <%= deck.name %> (<%= deck.card_count || 0 %>)
     <span class="opacity-40 font-light">
-      <%= DateTimeUtil.time_ago(deck.last_entry_inserted_at) %>
+      <%= DateTimeUtil.time_ago(deck.last_card_inserted_at) %>
     </span>
   </:col>
 
   <:action :let={{_id, deck}}>
-    <.link patch={~p"/decks/#{deck}/entries/new"}>New entry</.link>
+    <.link patch={~p"/decks/#{deck}/cards/new"}>New card</.link>
   </:action>
 
   <:action :let={{_id, deck}}>

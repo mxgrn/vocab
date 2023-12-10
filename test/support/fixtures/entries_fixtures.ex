@@ -1,22 +1,22 @@
-defmodule Vocab.EntriesFixtures do
+defmodule Vocab.CardsFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `Vocab.Entries` context.
+  entities via the `Vocab.Cards` context.
   """
 
   @doc """
-  Generate a entry.
+  Generate a card.
   """
-  def entry_fixture(attrs \\ %{}) do
-    {:ok, entry} =
+  def card_fixture(attrs \\ %{}) do
+    {:ok, card} =
       attrs
       |> Enum.into(%{
         pronunciation: "some pronunciation",
         source: "some source",
         translation: "some translation"
       })
-      |> Vocab.Entries.create_entry()
+      |> Vocab.Cards.create_card()
 
-    entry
+    card
   end
 end

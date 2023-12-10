@@ -11,7 +11,7 @@ defmodule Vocab.DecksFixtures do
     {:ok, deck} =
       attrs
       |> Enum.into(%{
-        last_entry_inserted_at: ~U[2023-12-06 04:13:00Z],
+        last_card_inserted_at: ~U[2023-12-06 04:13:00Z],
         name: "some name"
       })
       |> Vocab.Decks.create_deck()

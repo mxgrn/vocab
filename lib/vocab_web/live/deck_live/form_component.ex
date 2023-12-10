@@ -69,7 +69,7 @@ defmodule VocabWeb.DeckLive.FormComponent do
   end
 
   defp save_deck(socket, :new, deck_params) do
-    deck_params = Map.put(deck_params, "last_entry_inserted_at", DateTime.utc_now())
+    deck_params = Map.put(deck_params, "last_card_inserted_at", DateTime.utc_now())
 
     case Decks.create_deck(deck_params) do
       {:ok, deck} ->

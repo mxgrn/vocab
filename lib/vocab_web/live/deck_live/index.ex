@@ -7,7 +7,7 @@ defmodule VocabWeb.DeckLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :decks, Decks.list_decks_with_entry_count())}
+    {:ok, stream(socket, :decks, Decks.list_decks_with_card_count())}
   end
 
   @impl true
