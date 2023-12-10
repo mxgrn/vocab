@@ -61,9 +61,12 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :vocab,
-       :deck_filepath,
-       System.user_home() <> "/Library/Mobile Documents/com~apple~CloudDocs/Flashcards"
+path = System.user_home() <> "/Library/Mobile Documents/com~apple~CloudDocs/Flashcards"
+
+# Make sure the path exists
+File.mkdir_p(path)
+
+config :vocab, :deck_filepath, path
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
