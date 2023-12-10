@@ -4,7 +4,7 @@
 
 <img width="678" alt="image" src="https://github.com/mxgrn/vocab/assets/33935/44f17fa7-6dad-4dc1-9ebd-5eb7efd0a358">
 
-<img width="821" alt="image" src="https://github.com/mxgrn/vocab/assets/33935/24267279-0595-455f-adb8-708788e3a5ec">
+<img width="841" alt="image" src="https://github.com/mxgrn/vocab/assets/33935/7b7a49f3-0aa5-46b2-9540-0ccb3dc3ccdc">
 
 The files will be created in the Flashcards folder on iCloud drive.
 
