@@ -20,6 +20,12 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/forms"),
+    plugin(function({ addBase }) {
+    // Increase base font size
+     addBase({
+        'html': { fontSize: "20px" },
+      })
+    }),
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //
