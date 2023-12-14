@@ -24,7 +24,7 @@ This Elixir app, running in a browser, helps building Flashcards-compatible .txt
 
 <img width="678" alt="image" src="https://github.com/mxgrn/vocab/assets/33935/44f17fa7-6dad-4dc1-9ebd-5eb7efd0a358">
 
-<img width="841" alt="image" src="https://github.com/mxgrn/vocab/assets/33935/7b7a49f3-0aa5-46b2-9540-0ccb3dc3ccdc">
+<img width="765" alt="image" src="https://github.com/mxgrn/vocab/assets/33935/8f026452-b1ed-4b9a-a394-d0f6caca3160">
 
 ## How to run
 
