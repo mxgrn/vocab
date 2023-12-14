@@ -3,6 +3,13 @@
     <.icon name="hero-chevron-left" />
     <%= @deck.name %> (<%= @card_count %>)
   </span>
+  <br />
+  <div :if={@deck.reverse_deck} class="text-sm opacity-50">
+    Reverse deck:
+    <.link navigate={~p"/decks/#{@deck.reverse_deck.id}/cards"}>
+      <%= @deck.reverse_deck.name %>
+    </.link>
+  </div>
 
   <:actions>
     <.link patch={~p"/decks/#{@deck}/cards/new"}>
@@ -13,13 +20,8 @@
 
 <.table id="cards" rows={@streams.cards}>
   <:col :let={{_id, card}}>
-    <.link patch={~p"/cards/#{card}/edit"}><%= card.source %></.link>
+    <.link patch={~p"/decks/#{@deck}/cards/#{card}/edit"}><%= card.source %></.link>
   </:col>
-  <:action :let={{_id, card}}>
-    <div class="sr-only">
-      <.link navigate={~p"/cards/#{card}"}>Show</.link>
-    </div>
-  </:action>
   <:action :let={{id, card}}>
     <.link
       phx-click={JS.push("delete", value: %{id: card.id}) |> hide("##{id}")}

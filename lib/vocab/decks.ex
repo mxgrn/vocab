@@ -18,7 +18,7 @@ defmodule Vocab.Decks do
 
   """
   def list_decks do
-    Repo.all(Deck)
+    Repo.all(from d in Deck, order_by: [desc: d.last_card_inserted_at])
   end
 
   def list_decks_with_card_count do
@@ -45,6 +45,10 @@ defmodule Vocab.Decks do
 
   """
   def get_deck!(id), do: Repo.get!(Deck, id)
+
+  def preload(deck, preloads) do
+    Repo.preload(deck, preloads)
+  end
 
   @doc """
   Creates a deck.

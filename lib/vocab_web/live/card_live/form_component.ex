@@ -30,7 +30,17 @@ defmodule VocabWeb.CardLive.FormComponent do
         <.input field={@form[:pronunciation]} type="text" label="Pronunciation" />
         <.input field={@form[:deck_id]} type="hidden" value={@deck.id} />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Card</.button>
+          <.button phx-disable-with="Saving...">Save card</.button>
+          <button
+            :if={@action == :edit && @deck.reverse_deck}
+            phx-click="create_reverse"
+            phx-disable-with="Creating..."
+            phx-value-id={@form.data.id}
+            phx-target={@myself}
+            class="text-zinc-500 text-sm"
+          >
+            Create reverse card
+          </button>
         </:actions>
       </.simple_form>
     </div>
@@ -59,6 +69,10 @@ defmodule VocabWeb.CardLive.FormComponent do
 
   def handle_event("save", %{"card" => card_params}, socket) do
     save_card(socket, socket.assigns.action, card_params)
+  end
+
+  def handle_event("create_reverse", _params, %{assigns: %{deck: deck, card: card}} = socket) do
+    {:noreply, push_navigate(socket, to: ~p"/decks/#{deck.reverse_deck_id}/cards/new?reverse_from_id=#{card.id}")}
   end
 
   defp save_card(socket, :edit, card_params) do

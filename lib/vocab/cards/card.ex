@@ -18,6 +18,7 @@ defmodule Vocab.Cards.Card do
   def changeset(card, attrs) do
     card
     |> cast(attrs, [:deck_id, :source, :translation, :pronunciation])
-    |> validate_required([:deck_id, :source, :translation, :pronunciation])
+    |> validate_required([:deck_id, :source, :translation])
+    |> unique_constraint(:source, name: :entries_deck_id_source_index)
   end
 end

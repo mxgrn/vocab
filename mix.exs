@@ -51,6 +51,7 @@ defmodule Vocab.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:plug_cowboy, "~> 2.5"},
+      {:ayesql, "~> 1.1"},
       {:styler, "~> 0.10", only: [:dev, :test], runtime: false}
     ]
   end

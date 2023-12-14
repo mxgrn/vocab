@@ -5,8 +5,8 @@ defmodule Vocab.Cards do
 
   import Ecto.Query, warn: false
 
-  alias Vocab.Decks
   alias Vocab.Cards.Card
+  alias Vocab.Decks
   alias Vocab.Repo
 
   @doc """
@@ -49,7 +49,7 @@ defmodule Vocab.Cards do
       ** (Ecto.NoResultsError)
 
   """
-  def get_card!(id), do: Repo.get!(Card, id)
+  def get_card!(id, preloads \\ []), do: Card |> Repo.get!(id) |> Repo.preload(preloads)
 
   @doc """
   Creates a card.

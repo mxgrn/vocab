@@ -9,7 +9,7 @@ defmodule VocabWeb.CardLive.Index do
 
   @impl true
   def mount(%{"deck_id" => deck_id} = _params, _session, socket) do
-    deck = Decks.get_deck!(deck_id)
+    deck = deck_id |> Decks.get_deck!() |> Decks.preload(:reverse_deck)
     card_count = Cards.count_in_deck(deck_id)
 
     {:ok,
@@ -27,6 +27,21 @@ defmodule VocabWeb.CardLive.Index do
     socket
     |> assign(:page_title, "Edit Card")
     |> assign(:card, Cards.get_card!(id))
+  end
+
+  defp apply_action(socket, :new, %{"reverse_from_id" => reverse_from_id}) do
+    source_card = Cards.get_card!(reverse_from_id, :deck)
+
+    new_card = %Card{
+      source: source_card.translation,
+      translation: source_card.source,
+      pronunciation: source_card.pronunciation,
+      deck_id: source_card.deck.reverse_deck_id
+    }
+
+    socket
+    |> assign(:page_title, "Reverse Card")
+    |> assign(:card, new_card)
   end
 
   defp apply_action(socket, :new, _params) do

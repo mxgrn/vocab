@@ -10,7 +10,6 @@ defmodule VocabWeb.DeckLive.FormComponent do
     <div>
       <.header>
         <%= @title %>
-        <:subtitle>Use this form to manage deck records in your database.</:subtitle>
       </.header>
 
       <.simple_form
@@ -21,6 +20,16 @@ defmodule VocabWeb.DeckLive.FormComponent do
         phx-submit="save"
       >
         <.input field={@form[:name]} type="text" label="Name" />
+        <.input
+          field={@form[:reverse_deck_id]}
+          type="select"
+          label="Reverse deck (optional)"
+          prompt="---"
+          options={
+            Decks.list_decks_with_card_count()
+            |> Enum.map(&[key: &1.name <> " (#{&1.card_count})", value: &1.id])
+          }
+        />
         <:actions>
           <.button phx-disable-with="Saving...">Save Deck</.button>
         </:actions>
