@@ -99,7 +99,7 @@ defmodule VocabWeb.CardLive.FormComponent do
         {:noreply,
          socket
          |> put_flash(:info, "Card created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+         |> push_navigate(to: ~p"/decks/#{socket.assigns.deck}/cards/new")}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}
