@@ -7,13 +7,18 @@ This Elixir app, running in a browser, helps building Flashcards-compatible .txt
 ## Main features
 
 - On-the-fly creation and updating of .txt files on the iCloud disk, one per card deck, in the Flashcards folder.
-- Each cards supports 3 fields: source, translation, and pronunciation. The pronunciation gets automatically pre-pended to the flipside of the card in Flashcards.
+- Each cards supports the following fields:
+    - source - word/phrase to be translated
+    - translation
+    - pronunciation (optional) - pronunciation in the learnt language
+    - examples (optional) - one or more examples that show possible usage of both cards (can include both languages).
+    The pronunciation, if provided, gets automatically prepended on the flipside of the card in Flashcards.The examples, if provided, get automatically apended on the flipside.
 - Creation of a "reverse" card, where source and translation are swapped. To enable this feature, assign a reverse deck to any given deck first.
 
 ## Planned work
 
 - Package into a [Tauri](https://github.com/tauri-apps/tauri) app to be distributed as a .dmg installer.
-- Add support for examples (the optional "3rd side" of a Flashcards card).
+- Don't use the dev DB for "production" cards.
 
 ## Some screenshots
 

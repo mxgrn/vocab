@@ -1,15 +1,18 @@
 defmodule Vocab.Files do
   @moduledoc false
+  alias Vocab.Cards
   alias Vocab.Decks
   alias Vocab.Decks.Deck
-  alias Vocab.Cards
 
   def dump!(%Deck{} = deck) do
     file = deck |> filename() |> File.open!([:write, :utf8])
 
     for card <- Cards.list_for_deck(deck.id) do
       pronunciation = card.pronunciation && card.pronunciation <> "\n"
-      card = ~s("#{card.source}"\t"#{pronunciation}#{card.translation}"\n)
+      examples = card.examples && "\n\n" <> card.examples
+
+      card = ~s("#{card.source}"\t"#{pronunciation}#{card.translation}#{examples}"\n)
+
       IO.write(file, card)
     end
 

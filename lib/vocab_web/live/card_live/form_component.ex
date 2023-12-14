@@ -21,13 +21,14 @@ defmodule VocabWeb.CardLive.FormComponent do
       >
         <div class="flex gap-4">
           <div class="flex-1">
-            <.input field={@form[:source]} type="textarea" label="Source" rows="10" />
+            <.input field={@form[:source]} type="textarea" label="Source *" rows="4" />
           </div>
           <div class="flex-1">
-            <.input field={@form[:translation]} type="textarea" label="Translation" rows="10" />
+            <.input field={@form[:translation]} type="textarea" label="Translation *" rows="4" />
           </div>
         </div>
         <.input field={@form[:pronunciation]} type="text" label="Pronunciation" />
+        <.input field={@form[:examples]} type="textarea" label="Examples" rows="4" />
         <.input field={@form[:deck_id]} type="hidden" value={@deck.id} />
         <:actions>
           <.button phx-disable-with="Saving...">Save card</.button>
