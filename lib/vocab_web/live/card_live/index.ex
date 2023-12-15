@@ -24,13 +24,15 @@ defmodule VocabWeb.CardLive.Index do
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
+    deck = socket.assigns.deck
     socket
-    |> assign(:page_title, "Edit Card")
+    |> assign(:page_title, "#{deck.name}, edit card")
     |> assign(:card, Cards.get_card!(id))
   end
 
   defp apply_action(socket, :new, %{"reverse_from_id" => reverse_from_id}) do
     source_card = Cards.get_card!(reverse_from_id, :deck)
+    deck = socket.assigns.deck
 
     new_card = %Card{
       source: source_card.translation,
@@ -40,19 +42,23 @@ defmodule VocabWeb.CardLive.Index do
     }
 
     socket
-    |> assign(:page_title, "Reverse Card")
+    |> assign(:page_title, "#{deck.name}, reverse card")
     |> assign(:card, new_card)
   end
 
   defp apply_action(socket, :new, _params) do
+    deck = socket.assigns.deck
+
     socket
-    |> assign(:page_title, "New Card")
+    |> assign(:page_title, "#{deck.name}, new card")
     |> assign(:card, %Card{})
   end
 
   defp apply_action(socket, :index, _params) do
+    deck = socket.assigns.deck
+
     socket
-    |> assign(:page_title, "Listing Cards")
+    |> assign(:page_title, deck.name)
     |> assign(:card, nil)
   end
 
