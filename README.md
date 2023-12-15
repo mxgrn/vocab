@@ -28,19 +28,23 @@ This Elixir app, running in a browser, helps building Flashcards-compatible .txt
 
 ## How to run
 
-### Get deps
+### 1. Get deps
 
     mix deps.get
 
-### Setup DB
+### 2. Setup DB
 
     mix ecto.setup
 
-### Generate the release
+### 3. Generate the release
 
     mix phx.digest
     MIX_ENV=prod mix release
 
-### Run the release
+### 4. Run the release
 
     PHX_SERVER=true SECRET_KEY_BASE=Mp7fEBRFRWeh1KXPzxTsvjFlVWIK9zIpRSRklaMdiN5k4M/MUlasj9ZrSo9BmEYG PORT=6001 DATABASE_URL=ecto://postgres:postgres@localhost/vocab_dev _build/prod/rel/vocab/bin/vocab start
+
+### 5. Open in browser
+
+Browse to http://localhost:6001
