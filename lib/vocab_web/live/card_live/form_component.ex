@@ -60,6 +60,8 @@ defmodule VocabWeb.CardLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"card" => card_params}, socket) do
+    notify_parent(:changed)
+
     changeset =
       socket.assigns.card
       |> Cards.change_card(card_params)

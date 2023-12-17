@@ -44,7 +44,13 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="deck-modal" show on_cancel={JS.patch(~p"/decks")}>
+<.modal
+  :if={@live_action in [:new, :edit]}
+  id="deck-modal"
+  show
+  on_cancel={JS.patch(~p"/decks")}
+  close_confirm={@dirty_form && "Are you sure?"}
+>
   <.live_component
     module={VocabWeb.DeckLive.FormComponent}
     id={@deck.id || :new}

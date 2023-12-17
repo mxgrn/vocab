@@ -25,9 +25,11 @@ defmodule VocabWeb.CardLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     deck = socket.assigns.deck
+
     socket
     |> assign(:page_title, "#{deck.name}, edit card")
     |> assign(:card, Cards.get_card!(id))
+    |> assign(:dirty_form, false)
   end
 
   defp apply_action(socket, :new, %{"reverse_from_id" => reverse_from_id}) do
@@ -44,6 +46,7 @@ defmodule VocabWeb.CardLive.Index do
     socket
     |> assign(:page_title, "#{deck.name}, reverse card")
     |> assign(:card, new_card)
+    |> assign(:dirty_form, false)
   end
 
   defp apply_action(socket, :new, _params) do
@@ -52,6 +55,7 @@ defmodule VocabWeb.CardLive.Index do
     socket
     |> assign(:page_title, "#{deck.name}, new card")
     |> assign(:card, %Card{})
+    |> assign(:dirty_form, false)
   end
 
   defp apply_action(socket, :index, _params) do
@@ -66,6 +70,10 @@ defmodule VocabWeb.CardLive.Index do
   def handle_info({VocabWeb.CardLive.FormComponent, {:saved, card}}, socket) do
     Files.dump!(card.deck_id)
     {:noreply, stream_insert(socket, :cards, card, at: 0)}
+  end
+
+  def handle_info({VocabWeb.CardLive.FormComponent, :changed}, socket) do
+    {:noreply, assign(socket, :dirty_form, true)}
   end
 
   @impl true

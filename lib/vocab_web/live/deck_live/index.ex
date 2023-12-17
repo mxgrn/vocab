@@ -19,12 +19,14 @@ defmodule VocabWeb.DeckLive.Index do
     socket
     |> assign(:page_title, "Edit Deck")
     |> assign(:deck, Decks.get_deck!(id))
+    |> assign(:dirty_form, false)
   end
 
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "New Deck")
     |> assign(:deck, %Deck{})
+    |> assign(:dirty_form, false)
   end
 
   defp apply_action(socket, :index, _params) do
@@ -36,6 +38,10 @@ defmodule VocabWeb.DeckLive.Index do
   @impl true
   def handle_info({VocabWeb.DeckLive.FormComponent, {:saved, deck}}, socket) do
     {:noreply, stream_insert(socket, :decks, deck, at: 0)}
+  end
+
+  def handle_info({VocabWeb.DeckLive.FormComponent, :changed}, socket) do
+    {:noreply, assign(socket, :dirty_form, true)}
   end
 
   @impl true

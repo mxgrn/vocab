@@ -50,6 +50,8 @@ defmodule VocabWeb.DeckLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"deck" => deck_params}, socket) do
+    notify_parent(:changed)
+
     changeset =
       socket.assigns.deck
       |> Decks.change_deck(deck_params)

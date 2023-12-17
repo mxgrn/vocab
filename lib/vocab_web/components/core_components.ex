@@ -40,6 +40,7 @@ defmodule VocabWeb.CoreComponents do
   attr :id, :string, required: true
   attr :show, :boolean, default: false
   attr :on_cancel, JS, default: %JS{}
+  attr :close_confirm, :string, default: nil
   slot :inner_block, required: true
 
   def modal(assigns) do
@@ -48,7 +49,8 @@ defmodule VocabWeb.CoreComponents do
       id={@id}
       phx-mounted={@show && show_modal(@id)}
       phx-remove={hide_modal(@id)}
-      data-cancel={JS.exec(@on_cancel, "phx-remove")}
+      data-do-cancel={JS.exec(@on_cancel, "phx-remove")}
+      data-cancel={JS.dispatch("close:modal", detail: %{close_confirm: @close_confirm})}
       class="relative z-50 hidden"
     >
       <div id={"#{@id}-bg"} class="bg-zinc-50/90 fixed inset-0 transition-opacity" aria-hidden="true" />
