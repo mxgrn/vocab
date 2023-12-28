@@ -14,7 +14,7 @@ config :vocab,
 # Configures the endpoint
 config :vocab, VocabWeb.Endpoint,
   url: [host: "localhost"],
-  adapter: Phoenix.Endpoint.Cowboy2Adapter,
+  adapter: Bandit.PhoenixAdapter,
   render_errors: [
     formats: [html: VocabWeb.ErrorHTML, json: VocabWeb.ErrorJSON],
     layout: false
