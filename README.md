@@ -20,7 +20,7 @@ This Elixir app, running in a browser, helps building Flashcards-compatible .txt
 - Package into a [Tauri](https://github.com/tauri-apps/tauri) app to be distributed as a .dmg installer.
 - Don't use the dev DB for "production" cards.
 
-## Some screenshots
+## Screenshots
 
 <img width="678" alt="image" src="https://github.com/mxgrn/vocab/assets/33935/44f17fa7-6dad-4dc1-9ebd-5eb7efd0a358">
 
@@ -38,7 +38,7 @@ This Elixir app, running in a browser, helps building Flashcards-compatible .txt
 
 ### 3. Generate the release
 
-    mix phx.digest
+    MIX_ENV=prod mix phx.digest
     MIX_ENV=prod mix release
 
 ### 4. Run the release
