@@ -21,7 +21,14 @@ defmodule Vocab.CardsTest do
     end
 
     test "create_card/1 with valid data creates a card" do
-      valid_attrs = %{source: "some source", translation: "some translation", pronunciation: "some pronunciation"}
+      deck = Vocab.DecksFixtures.deck_fixture()
+
+      valid_attrs = %{
+        source: "some source",
+        translation: "some translation",
+        pronunciation: "some pronunciation",
+        deck_id: deck.id
+      }
 
       assert {:ok, %Card{} = card} = Cards.create_card(valid_attrs)
       assert card.source == "some source"

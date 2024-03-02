@@ -8,12 +8,15 @@ defmodule Vocab.CardsFixtures do
   Generate a card.
   """
   def card_fixture(attrs \\ %{}) do
+    deck = Vocab.DecksFixtures.deck_fixture()
+
     {:ok, card} =
       attrs
       |> Enum.into(%{
         pronunciation: "some pronunciation",
         source: "some source",
-        translation: "some translation"
+        translation: "some translation",
+        deck_id: deck.id
       })
       |> Vocab.Cards.create_card()
 

@@ -4,6 +4,8 @@ defmodule VocabWeb.CardLive.FormComponent do
 
   alias Vocab.Cards
 
+  require Logger
+
   @impl true
   def render(assigns) do
     ~H"""
@@ -81,7 +83,7 @@ defmodule VocabWeb.CardLive.FormComponent do
   defp save_card(socket, :edit, card_params) do
     case Cards.update_card(socket.assigns.card, card_params) do
       {:ok, card} ->
-        notify_parent({:saved, card})
+        notify_parent({:updated, card})
 
         {:noreply,
          socket
@@ -96,12 +98,9 @@ defmodule VocabWeb.CardLive.FormComponent do
   defp save_card(socket, :new, card_params) do
     case Cards.create_card(card_params) do
       {:ok, card} ->
-        notify_parent({:saved, card})
+        notify_parent({:created, card})
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Card created successfully")
-         |> push_navigate(to: ~p"/decks/#{socket.assigns.deck}/cards/new")}
+        {:noreply, socket}
 
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign_form(socket, changeset)}

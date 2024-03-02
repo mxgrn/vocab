@@ -67,9 +67,17 @@ defmodule VocabWeb.CardLive.Index do
   end
 
   @impl true
-  def handle_info({VocabWeb.CardLive.FormComponent, {:saved, card}}, socket) do
+  def handle_info({VocabWeb.CardLive.FormComponent, {:updated, card}}, socket) do
     Files.dump!(card.deck_id)
-    {:noreply, stream_insert(socket, :cards, card, at: 0)}
+
+    {:noreply, push_navigate(socket, to: ~p"/decks/#{socket.assigns.deck}/cards")}
+  end
+
+  def handle_info({VocabWeb.CardLive.FormComponent, {:created, card}}, socket) do
+    Files.dump!(card.deck_id)
+
+    {:noreply,
+     socket |> push_navigate(to: ~p"/decks/#{socket.assigns.deck}/cards/new") |> stream_insert(:cards, card, at: 0)}
   end
 
   def handle_info({VocabWeb.CardLive.FormComponent, :changed}, socket) do
