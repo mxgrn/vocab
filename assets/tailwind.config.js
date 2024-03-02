@@ -23,7 +23,7 @@ module.exports = {
     plugin(function({ addBase }) {
     // Increase base font size
      addBase({
-        'html': { fontSize: "20px" },
+        'html': { fontSize: "18px" },
       })
     }),
     // Allows prefixing tailwind classes with LiveView classes to add rules

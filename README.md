@@ -18,7 +18,6 @@ This Elixir app, running in a browser, helps building Flashcards-compatible .txt
 ## Planned work
 
 - Package into a [Tauri](https://github.com/tauri-apps/tauri) app to be distributed as a .dmg installer.
-- Don't use the dev DB for "production" cards.
 
 ## Screenshots
 
@@ -34,16 +33,17 @@ This Elixir app, running in a browser, helps building Flashcards-compatible .txt
 
 ### 2. Setup DB
 
-    mix ecto.setup
+    DATABASE_URL=ecto://postgres:postgres@localhost/vocab MIX_ENV=prod mix ecto.setup
 
 ### 3. Generate the release
 
-    MIX_ENV=prod mix phx.digest
     MIX_ENV=prod mix release
 
 ### 4. Run the release
 
-    PHX_SERVER=true SECRET_KEY_BASE=Mp7fEBRFRWeh1KXPzxTsvjFlVWIK9zIpRSRklaMdiN5k4M/MUlasj9ZrSo9BmEYG PORT=6001 DATABASE_URL=ecto://postgres:postgres@localhost/vocab_dev _build/prod/rel/vocab/bin/vocab start
+> Note that you can assign a different port if needed.
+
+    PORT=6001 DATABASE_URL=ecto://postgres:postgres@localhost/vocab _build/prod/rel/vocab/bin/vocab start
 
 ### 5. Open in browser
 
