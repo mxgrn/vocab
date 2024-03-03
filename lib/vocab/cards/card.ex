@@ -20,6 +20,7 @@ defmodule Vocab.Cards.Card do
     card
     |> cast(attrs, [:deck_id, :source, :translation, :pronunciation, :examples])
     |> validate_required([:deck_id, :source, :translation])
-    |> unique_constraint(:source, name: :entries_deck_id_source_index)
+    |> unique_constraint(:source, name: :cards_deck_id_source_index)
+    |> unique_constraint(:translation, name: :cards_deck_id_translation_index)
   end
 end

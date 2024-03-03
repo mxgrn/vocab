@@ -12,5 +12,7 @@ defmodule Vocab.Repo.Migrations.CreateCards do
     end
 
     create index(:cards, [:deck_id])
+    create unique_index(:cards, [:deck_id, :source])
+    create unique_index(:cards, [:deck_id, :translation])
   end
 end
