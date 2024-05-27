@@ -2,13 +2,18 @@ import Config
 
 # Configure your database
 config :vocab, Vocab.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "vocab_dev",
+  database: Path.expand("../vocab_dev.db", __DIR__),
+  pool_size: 5,
   stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  show_sensitive_data_on_connection_error: true
+
+# username: "postgres",
+# password: "postgres",
+# hostname: "localhost",
+# database: "vocab_dev",
+# stacktrace: true,
+# show_sensitive_data_on_connection_error: true,
+# pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
