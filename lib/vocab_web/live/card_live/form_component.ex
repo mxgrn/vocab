@@ -25,11 +25,22 @@ defmodule VocabWeb.CardLive.FormComponent do
           <div class="flex-1">
             <.input field={@form[:source]} type="textarea" label="Source *" rows="4" />
           </div>
+          <div class="flex-none pt-8">
+            <button
+              type="button"
+              phx-click="auto_translate"
+              phx-disable-with="⏳"
+              phx-target={@myself}
+              class="phx-submit-loading:opacity-75 rounded-lg bg-white hover:bg-zinc-50 py-2 px-3 text-sm font-semibold leading-6 text-white active:text-white/80 text-xl"
+            >
+              ➡️
+            </button>
+          </div>
           <div class="flex-1">
             <.input field={@form[:translation]} type="textarea" label="Translation *" rows="4" />
           </div>
         </div>
-        <.input field={@form[:pronunciation]} type="text" label="Pronunciation" />
+        <.input field={@form[:transcription]} type="text" label="Transcription" />
         <.input field={@form[:examples]} type="textarea" label="Examples" rows="4" />
         <.input field={@form[:deck_id]} type="hidden" value={@deck.id} />
         <:actions>
@@ -58,6 +69,47 @@ defmodule VocabWeb.CardLive.FormComponent do
      socket
      |> assign(assigns)
      |> assign_form(changeset)}
+  end
+
+  @impl true
+  def handle_event("auto_translate", _params, socket) do
+    source = socket.assigns.form.params["source"]
+
+    source
+    |> Vocab.Openai.Client.translate()
+    |> case do
+      {:ok, response} ->
+        dbg(response)
+        [translation, transcription, examples] = String.split(response, "\n\n")
+
+        # json = Jason.decode!(encoded_json)
+
+        # dbg(json)
+
+        # translation_data =
+        #   json
+        #   |> Map.put("source", source)
+        #   |> Map.put("examples", Enum.join(json["examples"], "\n\n"))
+
+        # |> Map.put("transcription", "[#{json["transcription"]}]")
+
+        transcription = String.replace(transcription, ["/", "[", "]"], "")
+
+        changeset =
+          socket.assigns.card
+          |> Cards.change_card(%{
+            source: source,
+            translation: translation,
+            transcription: "[#{transcription}]",
+            examples: examples
+          })
+          |> Map.put(:action, :validate)
+
+        {:noreply, assign_form(socket, changeset)}
+
+      error ->
+        raise "Failed to translate: #{inspect(error)}"
+    end
   end
 
   @impl true

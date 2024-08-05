@@ -9,7 +9,7 @@ defmodule Vocab.Cards.Card do
 
     field :source, :string
     field :translation, :string
-    field :pronunciation, :string
+    field :transcription, :string, source: :pronunciation
     field :examples, :string
 
     timestamps(type: :utc_datetime)
@@ -18,7 +18,7 @@ defmodule Vocab.Cards.Card do
   @doc false
   def changeset(card, attrs) do
     card
-    |> cast(attrs, [:deck_id, :source, :translation, :pronunciation, :examples])
+    |> cast(attrs, [:deck_id, :source, :translation, :transcription, :examples])
     |> validate_required([:deck_id, :source, :translation])
     |> unique_constraint(:source, name: :cards_deck_id_source_index)
     |> unique_constraint(:translation, name: :cards_deck_id_translation_index)

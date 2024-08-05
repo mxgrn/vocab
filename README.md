@@ -10,9 +10,9 @@ This Elixir app, running in a browser, helps building Flashcards-compatible .txt
 - Each cards supports the following fields:
     - source - word/phrase to be translated
     - translation
-    - pronunciation (optional) - pronunciation in the learnt language
+    - transcription (optional) - transcription in the learnt language
     - examples (optional) - one or more examples that show possible usage of both cards (can include both languages).
-    The pronunciation, if provided, gets automatically prepended on the flipside of the card in Flashcards.The examples, if provided, get automatically apended on the flipside.
+    The transcription, if provided, gets automatically prepended on the flipside of the card in Flashcards.The examples, if provided, get automatically apended on the flipside.
 - Creation of a "reverse" card, where source and translation are swapped. To enable this feature, assign a reverse deck to any given deck first.
 
 ## Planned work
@@ -25,7 +25,7 @@ This Elixir app, running in a browser, helps building Flashcards-compatible .txt
 
 <img width="765" alt="image" src="https://github.com/mxgrn/vocab/assets/33935/8f026452-b1ed-4b9a-a394-d0f6caca3160">
 
-## How to run
+## How to build and run the release
 
 ### 1. Get deps
 
@@ -35,9 +35,13 @@ This Elixir app, running in a browser, helps building Flashcards-compatible .txt
 
     DATABASE_URL=ecto://postgres:postgres@localhost/vocab MIX_ENV=prod mix ecto.setup
 
+### 2.5 Compile assets
+
+    MIX_ENV=prod mix assets.deploy
+
 ### 3. Generate the release
 
-    MIX_ENV=prod mix release
+    OPENAI_API_KEY=insert-your-key MIX_ENV=prod mix release
 
 ### 4. Run the release
 

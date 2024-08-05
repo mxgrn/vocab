@@ -13,7 +13,7 @@ defmodule Vocab.CardsFixtures do
     {:ok, card} =
       attrs
       |> Enum.into(%{
-        pronunciation: "some pronunciation",
+        transcription: "some transcription",
         source: "some source",
         translation: "some translation",
         deck_id: deck.id

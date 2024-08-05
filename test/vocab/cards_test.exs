@@ -8,7 +8,7 @@ defmodule Vocab.CardsTest do
 
     alias Vocab.Cards.Card
 
-    @invalid_attrs %{source: nil, translation: nil, pronunciation: nil}
+    @invalid_attrs %{source: nil, translation: nil, transcription: nil}
 
     test "list_cards/0 returns all cards" do
       card = card_fixture()
@@ -26,14 +26,14 @@ defmodule Vocab.CardsTest do
       valid_attrs = %{
         source: "some source",
         translation: "some translation",
-        pronunciation: "some pronunciation",
+        transcription: "some transcription",
         deck_id: deck.id
       }
 
       assert {:ok, %Card{} = card} = Cards.create_card(valid_attrs)
       assert card.source == "some source"
       assert card.translation == "some translation"
-      assert card.pronunciation == "some pronunciation"
+      assert card.transcription == "some transcription"
     end
 
     test "create_card/1 with invalid data returns error changeset" do
@@ -46,13 +46,13 @@ defmodule Vocab.CardsTest do
       update_attrs = %{
         source: "some updated source",
         translation: "some updated translation",
-        pronunciation: "some updated pronunciation"
+        transcription: "some updated transcription"
       }
 
       assert {:ok, %Card{} = card} = Cards.update_card(card, update_attrs)
       assert card.source == "some updated source"
       assert card.translation == "some updated translation"
-      assert card.pronunciation == "some updated pronunciation"
+      assert card.transcription == "some updated transcription"
     end
 
     test "update_card/2 with invalid data returns error changeset" do

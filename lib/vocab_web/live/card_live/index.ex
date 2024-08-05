@@ -39,7 +39,7 @@ defmodule VocabWeb.CardLive.Index do
     new_card = %Card{
       source: source_card.translation,
       translation: source_card.source,
-      pronunciation: source_card.pronunciation,
+      transcription: source_card.transcription,
       deck_id: source_card.deck.reverse_deck_id
     }
 

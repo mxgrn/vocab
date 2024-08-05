@@ -63,6 +63,8 @@ config :phoenix, :json_library, Jason
 
 path = System.user_home() <> "/Library/Mobile Documents/com~apple~CloudDocs/Flashcards"
 
+config :vocab, :openai, api_key: System.get_env("OPENAI_API_KEY")
+
 # Make sure the path exists
 File.mkdir_p(path)
 
@@ -71,3 +73,7 @@ config :vocab, :deck_filepath, path
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
+
+if File.exists?("#{Path.dirname(__ENV__.file)}/#{Mix.env()}.local.exs") do
+  import_config "#{Mix.env()}.local.exs"
+end
