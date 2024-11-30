@@ -27,8 +27,8 @@ defmodule VocabWeb.Router do
     live "/decks/:id/show/edit", DeckLive.Show, :edit
 
     live "/decks/:deck_id/cards", CardLive.Index, :index
-    live "/decks/:deck_id/cards/new", CardLive.Index, :new
-    live "/decks/:deck_id/cards/:id/edit", CardLive.Index, :edit
+    live "/decks/:deck_id/cards/new", CardLive.Form, :new
+    live "/decks/:deck_id/cards/:id/edit", CardLive.Form, :edit
   end
 
   # Other scopes may use custom stacks.

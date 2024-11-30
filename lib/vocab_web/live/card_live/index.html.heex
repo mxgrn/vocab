@@ -1,9 +1,10 @@
-<.header>
-  <span phx-click={JS.navigate(~p"/decks")} class="cursor-pointer">
-    <.icon name="hero-chevron-left" />
-    <%= @deck.name %> (<%= @card_count %>)
-  </span>
-  <br />
+<.link href={~p"/decks"}>
+  <.icon name="hero-chevron-left" /> Decks
+</.link>
+
+<.header class="mt-3">
+  <%= @deck.name %> (<%= @card_count %>) <br />
+
   <div :if={@deck.reverse_deck} class="text-sm opacity-50">
     Reverse deck:
     <.link navigate={~p"/decks/#{@deck.reverse_deck.id}/cards"}>
@@ -31,21 +32,3 @@
     </.link>
   </:action>
 </.table>
-
-<.modal
-  :if={@live_action in [:new, :edit]}
-  id="card-modal"
-  show
-  on_cancel={JS.patch(~p"/decks/#{@deck}/cards")}
-  close_confirm={@dirty_form && "Are you sure?"}
->
-  <.live_component
-    module={VocabWeb.CardLive.FormComponent}
-    id={@card.id || :new}
-    title={@page_title}
-    action={@live_action}
-    card={@card}
-    deck={@deck}
-    patch={~p"/decks/#{@deck}/cards"}
-  />
-</.modal>

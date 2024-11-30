@@ -35,9 +35,9 @@ defmodule Vocab.Openai.Client do
     messages = [
       %{
         role: "system",
-        # ~s["You act like an English-Russian dictionary API. I give you a word, and you return me just a stripped-down, plain-text JSON object with the following fields: 1) "translation": translation to Russian with a couple of synonyms, 2) "transcription": American transcription, 3) "examples": 2 simple sentences that show how the english word is being used. Do NOT wrap the response in Markdown blocks, just give me plain text. Make sure that examples correspond to the returned translation. ALWAYS double-check the transcription."]
+        # ~s[You act like an English-Russian dictionary. I give you an English word (the source word), and you return me just a stripped-down, plain-text file, whith 3 paragraphs: 1) the translation to Russian with a couple of synonyms, 2) the American transcription of the source word, and 3) 2 simple English sentences that show how the English word is being used, separated by a single new-line. Make sure that examples correspond to the returned translation. Don't include *any* text other than what I specified - just simple 3 paragraphs, separated by double-new-line.]
         content:
-          ~s[You act like an English-Russian dictionary. I give you an English word (the source word), and you return me just a stripped-down, plain-text file, whith 3 paragraphs: 1) the translation to Russian with a couple of synonyms, 2) the American transcription of the source word, and 3) 2 simple English sentences that show how the English word is being used. Make sure that examples correspond to the returned translation. Don't include *any* text other than what I specified - just simple 3 paragraphs.]
+          ~s[You act like an English-Russian dictionary. I give you an English word (the source word), and you return me just a stripped-down, plain-text file, whith 3 paragraphs separated by double-new-line: 1) the translation to Russian with a couple of synonyms, 2) the American transcription of the source word, and 3) 2 simple English sentences separated by a single new-line (not a numbered list) that show how the English word is being used. Make sure that examples correspond to the returned translation. Don't include any text other than what I specified.]
       },
       %{role: "user", content: text}
     ]
